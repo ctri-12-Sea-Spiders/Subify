@@ -20,7 +20,7 @@ const usersController = {};
 
 //Create a new user and add them to the username database
 usersController.createUser = (req, res, next) => {
-  const queryString = 'Insert into users (username, password, account_date, first_name, last_name, location, email, phone_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
+  const queryString = 'Insert into user (username, password, account_date, first_name, last_name, location, email, phone_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
 
   const createUserDetails = [
     req.body.username,
