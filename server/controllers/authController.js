@@ -39,7 +39,7 @@ authController.setCookie = (req, res, next) => {
 
 authController.setSession = (req, res, next) => {
   //Check to see if a valid login request was found by verifyUser
-  const queryString = `INSERT INTO public.sessions (username, time) VALUES ($1, $2)`
+  const queryString = `INSERT INTO public.sessions (username, time) VALUES ($1, $2)`;
   const sessionData = [res.locals.username, Date.now()]
   
   db.query(queryString, sessionData) 

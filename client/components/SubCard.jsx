@@ -11,13 +11,13 @@ export default function SubCard(props) {
     let newSummaryData = summaryData;
     newSummaryData.totalMonthlyPrice = 0;
     newSummaryData.subscriptionCount = 0;
-    fetch('/api/users')
+    fetch('/api/subscriptions')
       .then((response) => response.json())
       .then((data) => {
         console.log('use effect ran DATA:', data);
         setDisplay(data.map((sub, i) => { // refactored to use map method 
           newSummaryData.totalMonthlyPrice = (parseFloat(newSummaryData.totalMonthlyPrice) + parseFloat(sub.subscription_price)).toFixed(2);
-          newSummaryData.subscriptionCount += 1
+          newSummaryData.subscriptionCount += 1;
           return(
             <DisplayBox
               key={`card${i}`}
