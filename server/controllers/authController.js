@@ -6,7 +6,9 @@ const AuthController = {};
 AuthController.verifyUser = (req, res, next) => {
 
   const { username, password } = req.body;
-  const queryString = 'SELECT * FROM WHERE username = $1 AND password = $2 RETURNING*;';
+  console.log('Username',username,'Password',password)
+  //SELECT* FROM public.user WHERE ($1,$2) RETURNING*;
+  const queryString = 'SELECT * FROM public.users WHERE username = $1 AND password = $2;';
   const params = [username, password];
 
   db.query(queryString, params)
@@ -17,7 +19,7 @@ AuthController.verifyUser = (req, res, next) => {
 
         //Check to see if a valid match was found
         if(result.rows.length > 0)
-          res.locals.username = {username: result.rows[0].username};
+          res.locals.username = result.rows[0].username;
         else
           res.locals.username = {};
 
@@ -32,8 +34,8 @@ AuthController.verifyUser = (req, res, next) => {
 //Controller function to set a new cookie
 AuthController.setCookie = (req, res, next) => {
   //Check to see if a valid login request was found by verifyUser
-  if(res.locals.username.username) {
-    res.cookie('token', res.locals.username.username);
+  if(res.locals.username) {
+    res.cookie('token', res.locals.username);
   }
   return next();
 };
