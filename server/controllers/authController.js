@@ -6,7 +6,7 @@ const AuthController = {};
 AuthController.verifyUser = (req, res, next) => {
 
   const { username, password } = req.body;
-  const queryString = 'SELECT username FROM username WHERE username = $1 AND password = $2;';
+  const queryString = 'SELECT * FROM WHERE username = $1 AND password = $2 RETURNING*;';
   const params = [username, password];
 
   db.query(queryString, params)
