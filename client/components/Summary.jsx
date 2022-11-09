@@ -10,7 +10,7 @@ export default function Summary(props) {
   const [display1, setDisplay1] = useState([])
 
   useEffect(() => { 
-    fetch('/api/users')
+    fetch('/api/subscriptions')
       .then(res => {
         res.json();
         console.log('res json:', res)
@@ -27,11 +27,11 @@ export default function Summary(props) {
 
           
       
-       setDislay1(data.map((sub, i) => { // refactored to use map method 
+       setDisplay1(data.map((sub, i) => { // refactored to use map method 
           
           return (
             <SummaryCard 
-              id='summary' 
+              id={sub._id} 
               key={i} 
               totalSubs={display1.length} 
               yearly_price={sub.subscription_price * 12} 

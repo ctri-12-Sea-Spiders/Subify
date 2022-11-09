@@ -88,10 +88,9 @@ subscriptionController.deleteSubscription = (req, res, next) => {
 };
 
 subscriptionController.getSubscriptions = (req, res, next) => {
-  console.log('Token', req.cookies.token)
   const username = req.cookies.token;
-  const values = [username]
-  const queryString = `SELECT * FROM subscriptions WHERE username = ($1) `;
+  const values = [username];
+  const queryString = `SELECT * FROM public.subscriptions WHERE username = ($1) `;
 
   db.query(queryString, values)
     .then(result => { 
