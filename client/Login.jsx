@@ -27,12 +27,14 @@ export default function Login() {
     })
       .then(res => res.json())
       .then(result => {
+        console.log('Username',result.username);
         if(result.username){
           console.log('LOGGED IN!');
           navigate('/home');
         }
 
         else
+          //render some alert
           console.log('INVALID CREDENTIALS');
 
         setPassword('');
@@ -65,7 +67,7 @@ export default function Login() {
         />
         <div className="button-container">
           <button className='button'>Login</button>
-          <button class='button' onClick={() => navigate('/signup')}>Signup</button>
+          <button className='button' onClick={() => navigate('/signup')}>Signup</button>
          
         </div>
       </form>
