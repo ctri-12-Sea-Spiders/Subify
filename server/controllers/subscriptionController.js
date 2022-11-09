@@ -86,6 +86,7 @@ subscriptionController.deleteSubscription = (req, res, next) => {
       return next(err);
     });
 };
+
 subscriptionController.getSubscriptions = (req, res, next) => {
   console.log('Token', req.cookies.token)
   const username = req.cookies.token;
@@ -93,7 +94,8 @@ subscriptionController.getSubscriptions = (req, res, next) => {
   const queryString = `SELECT * FROM subscriptions WHERE username = ($1) `;
 
   db.query(queryString, values)
-    .then(result => {
+    .then(result => { 
+      console.log(result)
       res.locals.subscriptionInfo = result.rows;
       return next();
     })
