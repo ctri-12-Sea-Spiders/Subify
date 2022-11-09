@@ -1,13 +1,12 @@
 const db = require('../model/subifyModel');
 
-const AuthController = {};
+const authController = {};
 
 //Controller function which serves to verify the user
-AuthController.verifyUser = (req, res, next) => {
+authController.verifyUser = (req, res, next) => {
 
-  const { username, password } = req.body;
-  const queryString = 'SELECT * FROM WHERE username = $1 AND password = $2 RETURNING*;';
-  const params = [username, password];
+  const queryString = 'SELECT * FROM public.users WHERE username = $1 AND password = $2;';
+  const params = [req.body.username, req.body.password];
 
   db.query(queryString, params)
     .then(result => {
@@ -30,12 +29,41 @@ AuthController.verifyUser = (req, res, next) => {
 };
 
 //Controller function to set a new cookie
-AuthController.setCookie = (req, res, next) => {
+authController.setCookie = (req, res, next) => {
   //Check to see if a valid login request was found by verifyUser
   if(res.locals.username.username) {
-    res.cookie('token', res.locals.username.username);
+    res.cookie('token', res.locals.username.username, {httpyOnly: true, secure: true, overwrite: true});
   }
   return next();
 };
 
-module.exports = AuthController;
+authController.setSession = (req, res, next) => {
+  //Check to see if a valid login request was found by verifyUser
+  const queryString = `INSERT INTO public.sessions (username, time) VALUES ($1, $2)`
+  const sessionData = [res.locals.username.username, Date.now()]
+  
+  db.query(queryString, sessionData) 
+    .then(result => {
+      return next();
+    })
+    .catch(err =>  next(err))
+};
+
+authController.verifySession = (req, res, next) => {
+  
+const queryString = `SELECT * FROM public.sessions WHERE username = $1`
+
+const user = [req.cookies.token];
+
+db.query(queryString, user)
+  .then(results => {
+    if (!results.row) {
+
+    } else if (results.row.length > 0) {
+      
+    }
+  })
+
+}
+
+module.exports = authController;

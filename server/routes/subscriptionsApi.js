@@ -15,7 +15,7 @@ const router = express.Router();
 
 //Get all the subscriptions a user is signed up to
 router.get('/', subscriptionController.getSubscriptions, (req, res) =>{
-  console.log('Response', res.locals.subscriptionInfo);
+  //console.log('Response', res.locals.subscriptionInfo);
   return res.status(200).send(res.locals.subscriptionInfo);
 });
 
