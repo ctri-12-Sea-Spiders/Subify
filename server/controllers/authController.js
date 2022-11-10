@@ -15,8 +15,8 @@ authController.verifyUser = (req, res, next) => {
           .compare(password, result.rows[0].password)
           .then((match) => {
             console.log(match);
-            if (match === false) res.locals.username = {};
-            else res.locals.username = { username: result.rows[0].username };
+            if (match === false) res.locals.username = undefined;
+            else res.locals.username = result.rows[0].username;
             return next();
           })
           .catch((err) => next('Error in verify Bcrypt', err));
