@@ -6,7 +6,7 @@ An app that keeps track of all of your subscriptions with monthly/yearly costs
 
 - [About](#about)
 - [Installing](#installing)
-- [Features] (#features)
+- [Features](#features)
 - [Demo](#demo)
 - [To-Do](#to-do)
 - [Contributing](#contributing)
