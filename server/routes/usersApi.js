@@ -10,8 +10,12 @@ const router = express.Router();
 // });
 
 //Create a new user and add them to the database
-router.post('/', usersController.createUser, (req, res) =>{
+router.post('/', usersController.createUser, (req, res) => {
   return res.status(200).send(res.locals.username);
+});
+
+router.get('/', (req, res) => {
+  return res.status(200).send({ username: req.cookies.token });
 });
 
 // //Update the user's subscriptions adding a new sub
