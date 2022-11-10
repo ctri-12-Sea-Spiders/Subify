@@ -67,12 +67,14 @@ subscriptionController.addSubscription = (req, res, next) => {
 //Delete a subscription from the signed in users account database (not used by frontend at this time)
 subscriptionController.deleteSubscription = (req, res, next) => {
   // {"subscription_id":"5"}
-  const values = [req.body.subscription_id];
+  console.log('Inside deleteSubscription MW');
+  console.log('Sub ID', req.body.id)
+  const values = [req.body.id];
   const queryString = 'DELETE FROM subscriptions WHERE id = ($1)';
 
   db.query(queryString, values)
     .then((result) => {
-      console.log(result);
+      
       res.locals.user = result.rows;
       return next();
     })
@@ -88,7 +90,7 @@ subscriptionController.getSubscriptions = (req, res, next) => {
 
   db.query(queryString, values)
     .then((result) => {
-      console.log(result);
+      
       res.locals.subscriptionInfo = result.rows;
       return next();
     })
@@ -96,6 +98,27 @@ subscriptionController.getSubscriptions = (req, res, next) => {
       return next(err);
     });
 };
+
+subscriptionController.updateSubscription = (req, res, next) => {
+  // {"subscription_id":"5"}
+  console.log('Inside updateSubscription MW');
+  console.log('Req BODY', req.body)
+  const values = [req.body.id,req.body.subscription_name,req.body.monthly_price, req.body.content];
+  const queryString = 'UPDATE subscriptions SET subscription_name = ($2), subscription_price = ($3), category = ($4) WHERE id = ($1)  ';
+
+  db.query(queryString, values)
+    .then((result) => {
+      
+      res.locals.user = result.rows;
+      return next();
+    })
+    .catch((err) => {
+      return next(err);
+    });
+};
+
+
+
 
 /*  */
 module.exports = subscriptionController;
