@@ -13,7 +13,7 @@ An app that keeps track of all of your subscriptions with monthly/yearly costs
 
 ## About
 
-Subify allows users to create a secure account and track their monthly subscriptions to keep track of their budget!
+Subify a full stack web app that also supports mobile users using the technology stack of Javascript/CSS/HTML, React, Express, Node, and PostgreSQL. Subify allows users to create a secure account and track their monthly subscriptions to keep track of their budget!
 
 ## Installing
 
