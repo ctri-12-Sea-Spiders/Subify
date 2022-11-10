@@ -278,3 +278,36 @@ input:focus {
     font-size: 20px;
   }
 }
+
+#CRUD {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.newBtn {
+  display: flex;
+  justify-content: space-around;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin: 2px;
+}
+#updateBtn {
+ background-color: greenyellow;
+}
+#deleteBtn {
+background-color: rgb(249, 52, 105);
+}
+#subName,#category,#monthlyPrice {
+  margin: 5px;
+  border-radius: 5px;
+}
+.updateBtn {
+  display: flex;
+  justify-content: space-around;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin: 2px;
+  background-color:  greenyellow;
+}

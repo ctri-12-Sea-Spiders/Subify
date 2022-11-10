@@ -24,9 +24,14 @@ router.post('/', subscriptionController.addSubscription, (req, res) => {
   return res.sendStatus(200);
 });
 
-//Delete the subscription from the users account (not implemented by frontend)
-router.delete('/', subscriptionController.deleteSubscription, (req, res) => {
+//Delete the subscription from the users account 
+router.delete('/',subscriptionController.deleteSubscription, (req, res) => {
   return res.sendStatus(200);
 });
+//Update a subscription from the DB
+router.patch('/', subscriptionController.updateSubscription, (req,res) => {
+  return res.sendStatus(200);
+
+})
 
 module.exports = router;
