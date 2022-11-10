@@ -17,7 +17,7 @@ Subify a full stack web app that also supports mobile users using the technology
 
 ## Installing
 
-After cloning the repo to your local machine, from the directory cloned run:
+After cloning the repo to your local machine, from the directory cloned inside of your terminal, run:
 
 npm install
 
