@@ -26,7 +26,7 @@ export default function SubCard(props) {
             return (
               <DisplayBox
                 key={`card${i}`}
-                id={`card${i}`}
+                id={sub.id}
                 subscription_name={sub.subscription_name} // changed attribute names to match exactly with what we have state set with, and how we have it labeled in the backend
                 category={sub.category}
                 monthly_price={sub.subscription_price}
