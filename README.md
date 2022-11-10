@@ -48,4 +48,4 @@ https://user-images.githubusercontent.com/80486118/201169316-c3c91477-cd2f-49a7-
 
 ## Contributing
 
-Rabea Ahmad, Brandon Miller, Azal Adeel, Jeffery Richardson
+Rabea Ahmad, Brandon Miller, Azal Adeel, Jeffery Richardson, Ed Cho, Kelvin Van, Yufa Li, James Howat, Hashim Farah
