@@ -1,4 +1,4 @@
-# # Subify
+## Subify
 
 An app that keeps track of all of your subscriptions with monthly/yearly costs
 
