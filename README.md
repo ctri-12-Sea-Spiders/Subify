@@ -1,4 +1,4 @@
-# # Subify
+## Subify
 
 An app that keeps track of all of your subscriptions with monthly/yearly costs
 
@@ -6,18 +6,18 @@ An app that keeps track of all of your subscriptions with monthly/yearly costs
 
 - [About](#about)
 - [Installing](#installing)
-- [Features] (#features)
+- [Features](#features)
 - [Demo](#demo)
 - [To-Do](#to-do)
 - [Contributing](#contributing)
 
 ## About
 
-Subify allows users to create a secure account and track their monthly subscriptions to keep track of their budget!
+Subify a full stack web app that also supports mobile users using the technology stack of Javascript/CSS/HTML, React, Express, Node, and PostgreSQL. Subify allows users to create a secure account and track their monthly subscriptions to keep track of their budget!
 
 ## Installing
 
-After cloning the repo to your local machine, from the directory cloned run:
+After cloning the repo to your local machine, from the directory cloned inside of your terminal, run:
 
 npm install
 
@@ -37,6 +37,10 @@ npm start
 
 ## Demo
 
+
+https://user-images.githubusercontent.com/80486118/201169316-c3c91477-cd2f-49a7-9b9c-d8434f48bb46.mov
+
+
 ## To-Do
 
 - OAuth
@@ -44,4 +48,4 @@ npm start
 
 ## Contributing
 
-Rabea Ahmad, Brandon Miller, Azal Adeel, Jeffery Richardson
+Rabea Ahmad, Brandon Miller, Azal Adeel, Jeffery Richardson, Ed Cho, Kelvin Van, Yufa Li, James Howat, Hashim Farah
