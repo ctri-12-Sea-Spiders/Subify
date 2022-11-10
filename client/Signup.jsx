@@ -12,6 +12,7 @@ export default function Signup() {
   const [location, setLocation] = useState('');
   const [email, setEmail] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
+  const [duplicateUsername, setDuplicateUsername] = useState('');
 
   const navigate = useNavigate();
 
@@ -29,9 +30,10 @@ export default function Signup() {
       },
     });
     const data = await response.json();
-    console.log(data);
     console.log('res data:', data);
-    if (response.ok) {
+    if (data.duplicate) {
+      setDuplicateUsername('Sorry, username already taken');
+    } else if (response.ok) {
       setUsername('');
       setPassword('');
       setAccount_date('');
@@ -39,9 +41,9 @@ export default function Signup() {
       setLastname('');
       setLocation('');
       setEmail('');
-    }
 
-    navigate('/');
+      navigate('/');
+    }
   };
 
   return (
@@ -54,8 +56,20 @@ export default function Signup() {
         <form className="form" onSubmit={handleSubmit}>
           {/* <div className="header">Shopify</div> */}
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input type="text" onChange={(e) => setUsername(e.target.value)} value={username} />
+            <label htmlFor="username">
+              Username{' '}
+              <span className="color-warning">
+                <em>{duplicateUsername}</em>
+              </span>
+            </label>
+            <input
+              type="text"
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setDuplicateUsername('');
+              }}
+              value={username}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
