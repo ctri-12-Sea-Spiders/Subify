@@ -38,7 +38,6 @@ usersController.createUser = (req, res, next) => {
     res.locals.username = req.body.username;
     return next();
   });
-
 };
 
 module.exports = usersController;
