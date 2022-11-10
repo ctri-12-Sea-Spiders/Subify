@@ -12,45 +12,42 @@ export default function Home() {
   const [display, setDisplay] = useState([]);
   const [summaryData, setSummaryData] = useState({
     subscriptionCount: 0,
-    totalMonthlyPrice: 0
-  })
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+    totalMonthlyPrice: 0,
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     fetch('/api/authenticate/')
-    .then(res => res.json())
-    .then(result => {
-      console.log(result)
-      // result is true if authorized, and false if not
-      if (result) {
-        setIsLoggedIn(true)
-      } else {
-        navigate('/')
-      }
-    });
-  }, [])
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        // result is true if authorized, and false if not
+        if (result) {
+          setIsLoggedIn(true);
+        } else {
+          navigate('/');
+        }
+      });
+  }, []);
 
-  const contentLoggedIn =
-  <div id='mainContainer'>
-    <Welcome />
-    <div id='midContainer'>
-      <AddSub display={display} setDisplay={setDisplay} />
-      <div className="all-cards">
-        <SummaryCard summaryData={summaryData}/>
-        {/* <Summary display={display} setDisplay={setDisplay} /> */}
-        {/* <CardContainer /> Why was this needed? unsure about purpose*/}
-        <SubCard display={display} setDisplay={setDisplay} summaryData={summaryData} setSummaryData={setSummaryData}/>
+  const contentLoggedIn = (
+    <div id="mainContainer">
+      <Welcome />
+      <div id="midContainer">
+        <AddSub display={display} setDisplay={setDisplay} />
+        <div className="all-cards">
+          <SummaryCard summaryData={summaryData} />
+          {/* <Summary display={display} setDisplay={setDisplay} /> */}
+          {/* <CardContainer /> Why was this needed? unsure about purpose*/}
+          <SubCard display={display} setDisplay={setDisplay} summaryData={summaryData} setSummaryData={setSummaryData} />
+        </div>
       </div>
     </div>
-  </div>
+  );
 
   if (isLoggedIn) {
-    return (
-      contentLoggedIn
-    )
+    return contentLoggedIn;
   } else {
-    return (
-      <></>
-    )
+    return <></>;
   }
 }
