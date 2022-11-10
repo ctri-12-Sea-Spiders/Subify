@@ -20,23 +20,17 @@ export default function AddSub(props) {
     
     
     const body = formData;
-    const url = '/api/users'; // don't think we defined this yet, don't see a POST handler in subscriptionController file
+    const url = '/api/subscriptions'; // don't think we defined this yet, don't see a POST handler in subscriptionController file
 
     fetch(url, {
-      method: 'PATCH', // chnaged from PUT req to POST req
+      method: 'POST', // chnaged from PUT req to POST req
       headers: { 
         'Content-Type': 'Application/JSON' 
       },
       body: JSON.stringify(body)
     })
       .then(res => {
-        res.json();
       })
-
-      .then(data => {
-        console.log('Data:',  data);
-      })
-
       .catch((err) => {
         console.log('Error:', err);
       });
