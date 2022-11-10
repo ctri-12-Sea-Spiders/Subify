@@ -18,8 +18,9 @@ export default function Home() {
 
   useEffect(() => {
     fetch('/api/authenticate/')
-    // .then(res => res.json())
+    .then(res => res.json())
     .then(result => {
+      console.log(result)
       // result is true if authorized, and false if not
       if (result) {
         setIsLoggedIn(true)
