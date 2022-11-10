@@ -11,7 +11,7 @@ const router = express.Router();
 
 //Create a new user and add them to the database
 router.post('/', usersController.createUser, (req, res) => {
-  return res.status(200).json(res.locals.username);
+  return res.status(200).json(res.locals);
 });
 
 router.get('/', (req, res) => {
