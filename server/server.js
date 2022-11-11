@@ -1,6 +1,9 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const passport = require('passport');
 
 //Initalize express
 const app = express();
@@ -19,6 +22,23 @@ app.use(cookieParser());
 //Handle parsing the request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+//OAuth session setup
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false, // don't create session until something stored
+  })
+);
+app.use(passport.authenticate('session'));
+app.use(function (req, res, next) {
+  var msgs = req.session.messages || [];
+  res.locals.messages = msgs;
+  res.locals.hasMessages = !!msgs.length;
+  req.session.messages = [];
+  next();
+});
 
 //Route Handlers
 app.use('/api/users', usersAPI);
