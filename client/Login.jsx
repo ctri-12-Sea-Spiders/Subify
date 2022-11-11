@@ -1,7 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from './assets/Subify_Logo.png';
+import GoogleButton from 'react-google-button';
 
 export default function Login() {
   const URL = '/api/authenticate/';
@@ -60,6 +62,12 @@ export default function Login() {
               <button className="button" onClick={() => navigate('/signup')}>
                 Signup
               </button>
+            </div>
+            <br />
+            <div className="google-button">
+              <a href="/api/authenticate/login/google">
+                <GoogleButton type="dark" />
+              </a>
             </div>
           </form>
         </div>
