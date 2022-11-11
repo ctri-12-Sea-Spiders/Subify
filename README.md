@@ -33,6 +33,7 @@ npm start
 - Redesigned PostgreSQL database schema for more efficient reading and storing of data
 - Optimized front end to back end connections
 - Expanded database query edge case handling
+- Implemented Google OAuth as an option to sign in
 - Implemented unit testing
 
 ## Demo
@@ -43,7 +44,7 @@ https://user-images.githubusercontent.com/80486118/201169316-c3c91477-cd2f-49a7-
 
 ## To-Do
 
-- OAuth
+- OAuth with our session logic
 - Clean up UI/UX for better user experience
 
 ## Contributing
