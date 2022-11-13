@@ -30,7 +30,7 @@ passport.serializeUser(function (user, cb) {
         db.query(queryString2, values2)
           .then((result) => {
             console.log(result);
-            cb(null, user.id);
+            cb(null, user.username);
           })
           .catch((err) => console.log(err));
       })
