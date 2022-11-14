@@ -6,13 +6,17 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 const db = require('../model/subifyModel');
 const router = express.Router();
 
-//Check the user login credentials and if valid then assign a cookie to them and sign-in
-router.post('/', authController.verifyUser, authController.setCookie, authController.setSession, (req, res) => {
+// //Check the user login credentials and if valid then assign a cookie to them and sign-in
+// router.post('/', authController.verifyUser, authController.setCookie, authController.setSession, (req, res) => {
+//   req.session.loggedIn = true;
+//   return res.status(200).send({ username: res.locals.username });
+// });
+
+router.post('/', authController.verifyUser, authController.setSession, (req, res) => {
   return res.status(200).send({ username: res.locals.username });
 });
 
 router.get('/', authController.verifySession, (req, res) => {
-  console.log(res.locals.verified);
   return res.status(200).send(res.locals.verified);
 });
 
@@ -20,22 +24,23 @@ router.get('/', authController.verifySession, (req, res) => {
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    // our own set session
-    const queryString1 = 'DELETE FROM public.sessions WHERE username = $1';
-    const values1 = [user.username];
-    db.query(queryString1, values1)
-      .then(() => {
-        const queryString2 = 'INSERT INTO public.sessions (username, time) VALUES ($1, $2)';
-        const values2 = [user.username, Date.now()];
-        db.query(queryString2, values2)
-          .then((result) => {
-            console.log(result);
-            cb(null, user.username);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-    // passport cb
+    // // our own set session
+    // const queryString1 = 'DELETE FROM public.sessions WHERE username = $1';
+    // const values1 = [user.username];
+    // db.query(queryString1, values1)
+    //   .then(() => {
+    //     const queryString2 = 'INSERT INTO public.sessions (username, time) VALUES ($1, $2)';
+    //     const values2 = [user.username, Date.now()];
+    //     db.query(queryString2, values2)
+    //       .then((result) => {
+    //         console.log(result);
+    //         cb(null, user.username);
+    //       })
+    //       .catch((err) => console.log(err));
+    //   })
+    //   .catch((err) => console.log(err));
+    // // passport cb
+    cb(null, { username: user.username });
   });
 });
 
@@ -55,6 +60,7 @@ passport.use(
       state: true,
     },
     function verify(accessToken, refreshToken, profile, cb) {
+      console.log('hi!!!!');
       db.query('SELECT * FROM public.users WHERE username = $1', [profile.id])
         .then((result1) => {
           // if previously logged in

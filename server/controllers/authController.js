@@ -14,8 +14,7 @@ authController.verifyUser = (req, res, next) => {
         bcrypt
           .compare(password, result.rows[0].password)
           .then((match) => {
-            console.log(match);
-            if (match === false) res.locals.username = undefined;
+            if (match === false) return next({ message: { error: 'Incorrect username or password' } });
             else res.locals.username = result.rows[0].username;
             return next();
           })
@@ -37,40 +36,49 @@ authController.setCookie = (req, res, next) => {
 };
 
 authController.setSession = (req, res, next) => {
-  //Check to see if a valid login request was found by verifyUser
-  // DELETE FROM subscriptions WHERE id = ($1)
-  const queryString1 = 'DELETE FROM public.sessions WHERE username = $1';
-  const values1 = [res.locals.username];
-  db.query(queryString1, values1)
-    .then(() => {
-      const queryString2 = 'INSERT INTO public.sessions (username, time) VALUES ($1, $2)';
-      const values2 = [res.locals.username, Date.now()];
-      db.query(queryString2, values2)
-        .then((result) => {
-          return next();
-        })
-        .catch((err) => next(err));
-    })
-    .catch((err) => next(err));
+  // //Check to see if a valid login request was found by verifyUser
+  // // DELETE FROM subscriptions WHERE id = ($1)
+  // const queryString1 = 'DELETE FROM public.sessions WHERE username = $1';
+  // const values1 = [res.locals.username];
+  // db.query(queryString1, values1)
+  //   .then(() => {
+  //     const queryString2 = 'INSERT INTO public.sessions (username, time) VALUES ($1, $2)';
+  //     const values2 = [res.locals.username, Date.now()];
+  //     db.query(queryString2, values2)
+  //       .then((result) => {
+  //         return next();
+  //       })
+  //       .catch((err) => next(err));
+  //   })
+  //   .catch((err) => next(err));
+  req.session.username = res.locals.username;
+  console.log(req.session);
+  return next();
 };
 
 authController.verifySession = (req, res, next) => {
-  const queryString = 'SELECT * FROM public.sessions WHERE username = $1';
-  const user = [req.cookies.token];
+  if (req.session.username) {
+    res.locals.verified = true;
+  } else {
+    res.locals.verified = false;
+  }
+  return next();
+  // const queryString = 'SELECT * FROM public.sessions WHERE username = $1';
+  // const user = [req.cookies.token];
 
-  db.query(queryString, user)
-    .then((results) => {
-      if (results.rows.length > 0) {
-        const currTime = Date.now();
-        if (currTime - results.rows[0].time < 60000) {
-          console.log(currTime - results.rows[0].time);
-          res.locals.verified = true;
-        } else res.locals.verified = false;
-      } else res.locals.verified = false;
+  // db.query(queryString, user)
+  //   .then((results) => {
+  //     if (results.rows.length > 0) {
+  //       const currTime = Date.now();
+  //       if (currTime - results.rows[0].time < 60000) {
+  //         console.log(currTime - results.rows[0].time);
+  //         res.locals.verified = true;
+  //       } else res.locals.verified = false;
+  //     } else res.locals.verified = false;
 
-      return next();
-    })
-    .catch((err) => next(err));
+  //     return next();
+  //   })
+  //   .catch((err) => next(err));
 };
 
 module.exports = authController;

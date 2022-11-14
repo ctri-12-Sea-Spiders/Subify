@@ -1,7 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
@@ -9,8 +9,6 @@ const db = require('./model/subifyModel');
 
 //Initalize express
 const app = express();
-
-console.log(process.env.NODE_ENV);
 
 //Require Routes
 const usersAPI = require('./routes/usersApi.js');
@@ -20,8 +18,8 @@ const authenticationAPI = require('./routes/authenticationApi.js');
 //Setup port
 const PORT = 3000;
 
-// //Parse cookies
-// app.use(cookieParser());
+//Parse cookies
+app.use(cookieParser());
 
 //Handle parsing the request bodies
 app.use(express.json());
@@ -38,11 +36,13 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: true,
-    httpOnly: true,
+    // maxAge: 1000 * 60,
+    // sameSite: true,
+    // httpOnly: true,
+    // secure: process.env.NODE_ENV === 'production',
   },
 };
+
 app.use(session(sessionConfig));
 
 // app.use(
@@ -52,21 +52,22 @@ app.use(session(sessionConfig));
 //     saveUninitialized: false, // don't create session until something stored
 //   })
 // );
+
 app.use(passport.authenticate('session'));
-app.use(function (req, res, next) {
-  // try {
-  //   if (req.session.passport.user) {
-  //     res.cookie('token', req.session.passport.user, { httpOnly: true, secure: true, overwrite: true });
-  //   }
-  // } catch {
-  //   console.log('not authorized');
-  // }
-  var msgs = req.session.messages || [];
-  res.locals.messages = msgs;
-  res.locals.hasMessages = !!msgs.length;
-  req.session.messages = [];
-  next();
-});
+// app.use(function (req, res, next) {
+//   // try {
+//   //   if (req.session.passport.user) {
+//   //     res.cookie('token', req.session.passport.user, { httpOnly: true, secure: true, overwrite: true });
+//   //   }
+//   // } catch {
+//   //   console.log('not authorized');
+//   // }
+//   var msgs = req.session.messages || [];
+//   res.locals.messages = msgs;
+//   res.locals.hasMessages = !!msgs.length;
+//   req.session.messages = [];
+//   next();
+// });
 
 //Route Handlers
 app.use('/api/users', usersAPI);
@@ -81,6 +82,17 @@ app.get('/', (req, res) => {
 //Catch-all route handler
 app.use('*', (req, res) => {
   res.sendStatus(404);
+});
+
+app.use((err, req, res, next) => {
+  const defaultError = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { error: 'An error occurred' },
+  };
+  const errorObj = Object.assign(defaultError, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
 //Start server
