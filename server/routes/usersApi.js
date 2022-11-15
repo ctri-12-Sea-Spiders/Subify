@@ -14,6 +14,10 @@ router.post('/', usersController.createUser, (req, res) => {
   return res.status(200).json(res.locals);
 });
 
+// router.get('/', usersController.getUserSubInfo, (req, res) => {
+//   return res.status(200).send(res.locals.subscriptionInfo);
+// });
+
 // //Update the user's subscriptions adding a new sub
 // router.patch('/', usersController.updateUserSub, (req, res) =>{
 //   return res.sendStatus(200);

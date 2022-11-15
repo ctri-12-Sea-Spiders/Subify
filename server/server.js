@@ -36,7 +36,7 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    // maxAge: 1000 * 60,
+    maxAge: 1000 * 60,
     // sameSite: true,
     // httpOnly: true,
     // secure: process.env.NODE_ENV === 'production',
@@ -45,29 +45,7 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 
-// app.use(
-//   session({
-//     secret: 'keyboard cat',
-//     resave: false, // don't save session if unmodified
-//     saveUninitialized: false, // don't create session until something stored
-//   })
-// );
-
 app.use(passport.authenticate('session'));
-// app.use(function (req, res, next) {
-//   // try {
-//   //   if (req.session.passport.user) {
-//   //     res.cookie('token', req.session.passport.user, { httpOnly: true, secure: true, overwrite: true });
-//   //   }
-//   // } catch {
-//   //   console.log('not authorized');
-//   // }
-//   var msgs = req.session.messages || [];
-//   res.locals.messages = msgs;
-//   res.locals.hasMessages = !!msgs.length;
-//   req.session.messages = [];
-//   next();
-// });
 
 //Route Handlers
 app.use('/api/users', usersAPI);

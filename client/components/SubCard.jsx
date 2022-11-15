@@ -7,7 +7,7 @@ export default function SubCard(props) {
 
   console.log('DISPLAY', display);
   const getSubCards = () => {
-    let newSummaryData = summaryData;
+    const newSummaryData = summaryData;
     newSummaryData.totalMonthlyPrice = 0;
     newSummaryData.subscriptionCount = 0;
     fetch('/api/subscriptions')
@@ -29,17 +29,15 @@ export default function SubCard(props) {
                 subscription_name={sub.subscription_name} // changed attribute names to match exactly with what we have state set with, and how we have it labeled in the backend
                 category={sub.category}
                 monthly_price={sub.subscription_price}
-                
               />
             );
           })
         );
         setSummaryData(newSummaryData);
       });
-      
   };
   useEffect(() => {
-    getSubCards()
+    getSubCards();
     // using useEffect hook here to control freq of req
     // let newSummaryData = summaryData;
     // newSummaryData.totalMonthlyPrice = 0;

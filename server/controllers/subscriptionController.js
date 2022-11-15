@@ -41,7 +41,8 @@ const subscriptionController = {};
 
 //Add a new subscription to the signed in users account database
 subscriptionController.addSubscription = (req, res, next) => {
-  const username = req.cookies.token;
+  // const username = req.cookies.token;
+  const username = req.session.passport.user.username;
 
   const values = [username, req.body.subscription_name, req.body.monthly_price, req.body.due_date, req.body.category];
 
@@ -68,13 +69,12 @@ subscriptionController.addSubscription = (req, res, next) => {
 subscriptionController.deleteSubscription = (req, res, next) => {
   // {"subscription_id":"5"}
   console.log('Inside deleteSubscription MW');
-  console.log('Sub ID', req.body.id)
+  console.log('Sub ID', req.body.id);
   const values = [req.body.id];
   const queryString = 'DELETE FROM subscriptions WHERE id = ($1)';
 
   db.query(queryString, values)
     .then((result) => {
-      
       res.locals.user = result.rows;
       return next();
     })
@@ -84,13 +84,13 @@ subscriptionController.deleteSubscription = (req, res, next) => {
 };
 
 subscriptionController.getSubscriptions = (req, res, next) => {
-  const username = req.cookies.token;
+  // const username = req.cookies.token;
+  const username = req.session.passport.user.username;
   const values = [username];
   const queryString = 'SELECT * FROM public.subscriptions WHERE username = ($1)';
 
   db.query(queryString, values)
     .then((result) => {
-      
       res.locals.subscriptionInfo = result.rows;
       return next();
     })
@@ -102,13 +102,12 @@ subscriptionController.getSubscriptions = (req, res, next) => {
 subscriptionController.updateSubscription = (req, res, next) => {
   // {"subscription_id":"5"}
   console.log('Inside updateSubscription MW');
-  console.log('Req BODY', req.body)
-  const values = [req.body.id,req.body.subscription_name,req.body.monthly_price, req.body.content];
+  console.log('Req BODY', req.body);
+  const values = [req.body.id, req.body.subscription_name, req.body.monthly_price, req.body.content];
   const queryString = 'UPDATE subscriptions SET subscription_name = ($2), subscription_price = ($3), category = ($4) WHERE id = ($1)  ';
 
   db.query(queryString, values)
     .then((result) => {
-      
       res.locals.user = result.rows;
       return next();
     })
@@ -116,9 +115,6 @@ subscriptionController.updateSubscription = (req, res, next) => {
       return next(err);
     });
 };
-
-
-
 
 /*  */
 module.exports = subscriptionController;
