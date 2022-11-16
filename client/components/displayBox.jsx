@@ -1,8 +1,7 @@
 import React from 'react';
 
 export default function displayBox(props) {
-  const { getSubs, id, subscription_name, category, monthly_price } = props; // destructuring the props object so we can just use the prop names to render
-  // changed attribute names to match exactly with what we have state set with, and how we have it labeled in the backend
+  const { getSubs, id, subscription_name, category, monthly_price } = props;
 
   const handleClickDelete = (id) => {
     console.log('Button ID', id);

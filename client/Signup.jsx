@@ -18,8 +18,6 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const users = {username, account_date, first_name, last_name, location, email, phonenumber}
-    // const acctDate = new Date().toLocaleString();
     const users = { username, password, account_date, first_name, last_name, location, email, phone_number };
 
     const response = await fetch('/api/users', {

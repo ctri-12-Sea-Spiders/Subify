@@ -2,31 +2,22 @@ const express = require('express');
 const authController = require('../controllers/authController.js');
 const passport = require('passport');
 
-const db = require('../model/subifyModel');
 const router = express.Router();
 
-// //Check the user login credentials and if valid then assign a cookie to them and sign-in
-// router.post('/', authController.verifyUser, authController.setCookie, authController.setSession, (req, res) => {
-//   req.session.loggedIn = true;
-//   return res.status(200).send({ username: res.locals.username });
-// });
-
-// router.post('/', authController.verifyUser, authController.setSession, (req, res) => {
-//   return res.status(200).send({ username: res.locals.username });
-// });
-
+// handles login route using passport-local strategy
 router.post('/', passport.authenticate('local', { failureRedirect: '/' }), function (req, res) {
-  console.log('session', req.session);
   res.status(200).send(req.session.passport.user);
 });
 
+// verify express-session instance is valid
 router.get('/', authController.verifySession, (req, res) => {
-  console.log('session', req.session);
   return res.status(200).send(res.locals.verified);
 });
 
+// handles login route via passport's google OAuth2.0 strategy
 router.get('/login/google', passport.authenticate('google'));
 
+// handle redirect from google following authentication attempt
 router.get(
   '/oauth2/redirect/google',
   passport.authenticate('google', {

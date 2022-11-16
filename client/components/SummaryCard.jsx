@@ -1,9 +1,6 @@
 import React from 'react';
 
 export default function SummaryCard(props) {
-  //const { totalSubs, yearly_price, monthly_price } = props;
-  console.log('Card props', props.summaryData);
-
   return (
     <div className="displayBox-summ">
       <h2>Expense Summary</h2>

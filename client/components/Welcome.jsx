@@ -3,12 +3,11 @@ import logo from '../assets/Subify_Logo.png';
 
 export default function Welcome() {
   const [currentUser, setCurrentUser] = useState('');
-  console.log(document.cookie);
 
   useEffect(() => {
     fetch('/api/users')
       .then((res) => res.json())
-      .then((result) => setCurrentUser(result.username));
+      .then((result) => setCurrentUser(result.fName + ' ' + result.lName));
   }, []);
 
   return (
