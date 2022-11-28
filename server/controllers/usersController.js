@@ -3,26 +3,10 @@ const bcrypt = require('bcryptjs');
 
 const usersController = {};
 
-//Get and return all subscription info from the user's subscription database
-// usersController.getUserSubInfo = (req, res, next) => {
-//   const username = req.cookies.token;
-//   const queryString = `SELECT * FROM ${username}`;
-
-//   db.query(queryString)
-//     .then(results => {
-//       res.locals.subscriptionInfo = results.rows;
-//       return next();
-//     })
-//     .catch(err => {
-//       return next(err);
-//     });
-// };
-
 //Create a new user and add them to the username database
 usersController.createUser = (req, res, next) => {
-  const queryCheckUsername = 'SELECT username FROM public.users WHERE username = ($1);';
-  const valuesCheckUserame = [req.body.username];
-  db.query(queryCheckUsername, valuesCheckUserame)
+  const queryString = 'SELECT username FROM public.users WHERE username = ($1);';
+  db.query(queryString, [req.body.username])
     .then((result) => {
       // check for duplicate username, if exists return undefined to frontend
       if (result.rows.length > 0) {
@@ -54,6 +38,17 @@ usersController.createUser = (req, res, next) => {
           })
           .catch((err) => next(err));
       }
+    })
+    .catch((err) => next(err));
+};
+
+// serves username from session
+usersController.getUser = (req, res, next) => {
+  const queryString = 'SELECT * FROM public.users WHERE username = ($1);';
+  db.query(queryString, [req.session.passport.user.username])
+    .then((result) => {
+      res.locals = { fName: result.rows[0].first_name, lName: result.rows[0].last_name };
+      return next();
     })
     .catch((err) => next(err));
 };

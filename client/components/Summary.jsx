@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DisplayBox from './displayBox.jsx';
 import SummaryCard from './SummaryCard.jsx';
 
 export default function Summary(props) {
@@ -11,21 +10,10 @@ export default function Summary(props) {
     fetch('/api/subscriptions')
       .then((res) => {
         res.json();
-        console.log('res json:', res);
       })
       .then((data) => {
-        console.log('use effect ran DATA:', data);
-
-        // setDisplay(old => data)
-
-        // totalCost = data.monthly_price.reduce( (a, b) => {
-        //   return a + b
-        //   }, 0);
-
         setDisplay1(
           data.map((sub, i) => {
-            // refactored to use map method
-
             return (
               <SummaryCard
                 id={sub._id}
@@ -33,7 +21,6 @@ export default function Summary(props) {
                 totalSubs={display1.length}
                 yearly_price={sub.subscription_price * 12}
                 monthly_price={sub.subscription_price}
-                // totalCost={  totalCost}
               />
             );
           })

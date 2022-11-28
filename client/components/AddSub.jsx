@@ -1,10 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import SubCard from './SubCard.jsx';
-import CardContainer from './CardContainer.jsx';
 
 export default function AddSub(props) {
-  const { display, setDisplay } = props; //Props from parent Home.jsx to manage display and when to refresh
+  const { display, setDisplay } = props;
 
   const [formData, setFormData] = useState({
     // add username property
@@ -16,14 +14,12 @@ export default function AddSub(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //save the data and send the information to the backend
-    //we will need a put request to add this to the category?
 
     const body = formData;
-    const url = '/api/subscriptions'; // don't think we defined this yet, don't see a POST handler in subscriptionController file
+    const url = '/api/subscriptions';
 
     fetch(url, {
-      method: 'POST', // chnaged from PUT req to POST req
+      method: 'POST',
       headers: {
         'Content-Type': 'Application/JSON',
       },

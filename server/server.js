@@ -3,7 +3,9 @@ const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
+const db = require('./model/subifyModel');
 
 //Initalize express
 const app = express();
@@ -24,21 +26,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //OAuth session setup
-app.use(
-  session({
-    secret: 'keyboard cat',
-    resave: false, // don't save session if unmodified
-    saveUninitialized: false, // don't create session until something stored
-  })
-);
+const sessionConfig = {
+  store: new pgSession({
+    pool: db.pool,
+    tableName: 'user-sessions',
+    createTableIfMissing: true,
+  }),
+  secret: 'keyboard cat', // eventually convert to env var
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  },
+};
+
+app.use(session(sessionConfig));
+
 app.use(passport.authenticate('session'));
-app.use(function (req, res, next) {
-  var msgs = req.session.messages || [];
-  res.locals.messages = msgs;
-  res.locals.hasMessages = !!msgs.length;
-  req.session.messages = [];
-  next();
-});
 
 //Route Handlers
 app.use('/api/users', usersAPI);
@@ -53,6 +59,17 @@ app.get('/', (req, res) => {
 //Catch-all route handler
 app.use('*', (req, res) => {
   res.sendStatus(404);
+});
+
+app.use((err, req, res, next) => {
+  const defaultError = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { error: 'An error occurred' },
+  };
+  const errorObj = Object.assign(defaultError, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
 //Start server

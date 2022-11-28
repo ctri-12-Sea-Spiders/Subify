@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AddSub from './components/AddSub.jsx';
 import Welcome from './components/Welcome.jsx';
-import Summary from './components/Summary.jsx';
 import SummaryCard from './components/SummaryCard.jsx';
-import CardContainer from './components/CardContainer.jsx';
 import SubCard from './components/SubCard.jsx';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const navigate = useNavigate('/');
@@ -45,6 +43,7 @@ export default function Home() {
     </div>
   );
 
+  // conditionally render based on authorization status
   if (isLoggedIn) {
     return contentLoggedIn;
   } else {

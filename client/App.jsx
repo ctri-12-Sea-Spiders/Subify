@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Login from './Login.jsx';
 import Signup from './Signup.jsx';
-// import CardContainer from './components/CardContainer.jsx';
-// import Welcome from './components/Welcome.jsx';
-// import Summary from './components/Summary.jsx';
 import Home from './Home.jsx';
 import style from './view/style.scss';
 

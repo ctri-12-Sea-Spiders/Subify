@@ -1,7 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import logo from './assets/Subify_Logo.png';
 import GoogleButton from 'react-google-button';
 
@@ -27,9 +26,7 @@ export default function Login() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log('Username', result.username);
         if (result.username) {
-          console.log('LOGGED IN!');
           navigate('/home');
         }
         //render some alert

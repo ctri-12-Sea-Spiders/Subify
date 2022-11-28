@@ -4,28 +4,14 @@ const usersController = require('../controllers/usersController.js');
 
 const router = express.Router();
 
-// //Get all the subscriptions a user is signed up to
-// router.get('/', usersController.getUserSubInfo, (req, res) =>{
-//   return res.status(200).send(res.locals.subscriptionInfo);
-// });
-
-//Create a new user and add them to the database
+// Create a new user and add them to the database
 router.post('/', usersController.createUser, (req, res) => {
   return res.status(200).json(res.locals);
 });
 
-router.get('/', (req, res) => {
-  return res.status(200).send({ username: req.cookies.token });
+// Serve session info
+router.get('/', usersController.getUser, (req, res) => {
+  return res.status(200).json(res.locals);
 });
-
-// //Update the user's subscriptions adding a new sub
-// router.patch('/', usersController.updateUserSub, (req, res) =>{
-//   return res.sendStatus(200);
-// });
-
-// //Delete the subscription from the users account (not implemented by frontend)
-// router.delete('/', usersController.deleteUserSub, (req, res) =>{
-//   return res.sendStatus(200);
-// });
 
 module.exports = router;
