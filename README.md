@@ -44,7 +44,6 @@ https://user-images.githubusercontent.com/80486118/201169316-c3c91477-cd2f-49a7-
 
 ## To-Do
 
-- OAuth with our session logic
 - Clean up UI/UX for better user experience
 
 ## Contributing
